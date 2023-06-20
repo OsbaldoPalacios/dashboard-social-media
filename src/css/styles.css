@@ -13,6 +13,7 @@
 --BG: hsl(0, 0%, 100%);
 --VeryPaleBlue: hsl(225, 100%, 98%);
 --CardBG: hsl(227, 47%, 96%);
+--CardBGHover: hsl(227, 47%, 90%);
 --Text1: hsl(228, 12%, 44%);
 --Text2: hsl(230, 17%, 14%);
 }
@@ -29,6 +30,7 @@ body.darkmode{
 --BG: hsl(230, 17%, 14%);
 --VeryPaleBlue: hsl(232, 19%, 15%);
 --CardBG: hsl(228, 28%, 20%);
+--CardBGHover: hsl(228, 28%, 26%);
 --Text1: hsl(228, 34%, 66%);
 --Text2: hsl(0, 0%, 100%);
 transition: background-color 0.5s, color 0.5s;
@@ -93,6 +95,36 @@ ul{
     left: 31px;
 }
 
+.month{
+    position: relative;
+    
+}
+
+.month h4{
+    display: inline;
+    cursor: pointer;
+}
+
+.months{
+    position: absolute;
+    background-color: var(--CardBG);
+    z-index: 1000;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+    display: none;
+}
+
+.month h4:hover +.months, .months:hover{
+    display: block;
+}
+
+
+
+.item:hover{
+    cursor: pointer;
+    color: var(--Text1)
+}
 
 .overviews,
 .followers{
@@ -111,6 +143,13 @@ ul{
     gap: 1.5rem;
     position: relative;
     overflow: hidden;
+    transition: background-color 0.5s, transform 0.5s;
+    cursor: pointer;
+}
+
+.follower:hover{
+    background-color: var(--CardBGHover);
+    transform: translateY(-10px);
 }
 
 .follower-head{
@@ -171,7 +210,7 @@ ul{
     margin: 2rem 0;
 }
 
-
+/* Overview */
 
 .overview{
     background-color: var(--CardBG);
@@ -179,7 +218,16 @@ ul{
     border-radius: 1rem;
     display: grid;
     gap: 2rem;
+    transition: background-color 0.5s, transform 0.5s;
+    cursor: pointer;
 }
+
+
+.overview:hover{
+background-color: var(--CardBGHover);
+transform: translateY(-10px);
+}
+
 
 .overview-top,
 .overview-bottom{

@@ -1,20 +1,43 @@
-const ball = document.querySelector('.ball');
+import "./darkmode.js";
+import { amountFollowers } from "./helpers.js";
+import {printHeader, printBody} from "./layout.js"
 
-if(localStorage.getItem('DARKMODE')){
-    ball.classList.add('ball-move');
-    document.body.classList.add("darkmode");
-}
+const contentFollowers = document.querySelector(".followers");
+const contentOverviews = document.querySelector(".overviews");
 
 
-ball.addEventListener('click', () => {
-    if(localStorage.getItem('DARKMODE')){
-        ball.classList.remove('ball-move');
-        document.body.classList.remove("darkmode");
-        localStorage.removeItem('DARKMODE');
-    }else{
-        ball.classList.add('ball-move');
-        document.body.classList.add("darkmode");
-        localStorage.setItem('DARKMODE', true);
+const totalNumber = document.querySelector(".totalNumber");
+const months = document.querySelector(".months");
+const currentMonth = document.querySelector(".currentMonth");
+
+let dataDashboard = null;
+
+months.addEventListener('click', (e) =>{
+    if(e.target.classList.contains("item")){
+        const nameMonth = e.target.textContent;
+        currentMonth.textContent = nameMonth;
+
+        const  {dataHead, dataBody} = dataDashboard[nameMonth];
+        totalNumber.textContent = amountFollowers(dataHead);
+        printHeader(dataHead, contentFollowers);
+        printBody(dataBody, contentOverviews);
     }
 })
 
+async function getData(){
+    try {
+        const data = await fetch("./src/data.json")
+        const res = await data.json()
+
+        dataDashboard = res;
+        const  {dataHead, dataBody} = dataDashboard.ene;
+        totalNumber.textContent = amountFollowers(dataHead)
+
+        printHeader(dataHead, contentFollowers);
+        printBody(dataBody, contentOverviews);
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+getData();
